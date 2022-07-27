@@ -8,7 +8,7 @@ const validateRegisterInput = require('../validation/registerValidation')
 // @desc  Test the auth route
 // @access Public
 router.get('/test', (req, res) => {
-  res.send('Auth route working! *-*')
+  res.send('Auth route working! *_*')
 })
 
 // @route POST api/auth/register
@@ -29,7 +29,7 @@ router.post('/register', async (req, res) => {
     if (existingEmail) {
       return res
         .status(400)
-        .json({ error: 'There is already a user with this email.' })
+        .json({ error: 'A user with this email already exists.' })
     }
 
     const hashedPassword = await bcrypt.hash(req.body.password, 12)
@@ -52,6 +52,27 @@ router.post('/register', async (req, res) => {
   } catch (err) {
     console.log(err)
     res.status(500).send(err.message)
+  }
+})
+
+// @route POST api/auth/login
+// @desc  Login user and return an access token
+// @access Public
+router.post('/login', async (req, res) => {
+  try {
+    // Check for user
+    const user = await User.findOne({
+      email: new RegExp('^' + req.body.email + '$', 'i')
+    })
+    if (!user) {
+      return res.status(400).json({ error: 'Login credential error.' })
+    }
+
+    const passwordMatch = await bcrypt.compare(req.body.password, user.password)
+    return res.json({ passwordMatch })
+  } catch (err) {
+    console.log(err)
+    return res.status(500).send(err.message)
   }
 })
 

@@ -11,7 +11,7 @@ app.get('/api', (req, res) => {
   res.send('Fullstack Server Response')
 })
 
-// When it makes a GET request, it will look to authRoute
+// When it makes a request, it will look to authRoute
 app.use('/api/auth', authRoute)
 
 mongoose
