@@ -11,15 +11,6 @@ app.get('/api', (req, res) => {
   res.send('Fullstack Server Response')
 })
 
-// Can use to test your application, but not needed for full version
-// app.post('/api/name', (req, res) => {
-//   if (req.body.name) {
-//     return res.json({ name: req.body.name })
-//   } else {
-//     return res.status(400).json({ error: 'No name provided.' })
-//   }
-// })
-
 // When it makes a GET request, it will look to authRoute
 app.use('/api/auth', authRoute)
 

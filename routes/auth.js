@@ -43,8 +43,12 @@ router.post('/register', async (req, res) => {
     // Save user to db
     const savedUser = await newUser.save()
 
+    // Return user without showing password
+    const userToReturn = { ...savedUser._doc }
+    delete userToReturn.password
+
     // Return the new User
-    return res.json(savedUser)
+    return res.json(userToReturn)
   } catch (err) {
     console.log(err)
     res.status(500).send(err.message)
