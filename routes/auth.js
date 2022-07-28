@@ -98,7 +98,6 @@ router.post('/login', async (req, res) => {
 // @route GET api/auth/current
 // @desc  Return the currently authed user
 // @access Private
-
 router.get('/current', requiresAuth, (req, res) => {
   if (!req.user) {
     return res.status(401).send('Unauthorized')

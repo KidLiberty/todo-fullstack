@@ -7,7 +7,6 @@ const validateToDoInput = require('../validation/toDoValidation')
 // @route GET api/todos/test
 // @desc Test the todos route
 // @access Public
-
 router.get('/test', (req, res) => {
   res.send('ToDos route working! *-*')
 })
@@ -15,7 +14,6 @@ router.get('/test', (req, res) => {
 // @route POST api/todos/test
 // @desc Create new todo
 // @access Private
-
 router.post('/new', requiresAuth, async (req, res) => {
   try {
     const { errors, isValid } = validateToDoInput(req.body)
@@ -42,7 +40,6 @@ router.post('/new', requiresAuth, async (req, res) => {
 // @route GET api/todos/test
 // @desc Return the current users todos
 // @access Private
-
 router.get('/current', requiresAuth, async (req, res) => {
   try {
     const completeToDos = await Todo.find({
@@ -66,7 +63,6 @@ router.get('/current', requiresAuth, async (req, res) => {
 // @route PUT api/todos/:toDoId/complete
 // @desc Mark a ToDo as complete
 // @access Private
-
 router.put('/:toDoId/complete', requiresAuth, async (req, res) => {
   try {
     const toDo = await Todo.findOne({
@@ -106,7 +102,6 @@ router.put('/:toDoId/complete', requiresAuth, async (req, res) => {
 // @route PUT api/todos/:toDoId/incomplete
 // @desc Mark a ToDo as incomplete
 // @access Private
-
 router.put('/:toDoId/incomplete', requiresAuth, async (req, res) => {
   try {
     const toDo = await Todo.findOne({
@@ -140,7 +135,6 @@ router.put('/:toDoId/incomplete', requiresAuth, async (req, res) => {
 // @route PUT api/todos/:toDoId
 // @desc Update a a ToDo
 // @access Private
-
 router.put('/:toDoId', requiresAuth, async (req, res) => {
   try {
     const toDo = await Todo.findOne({
@@ -177,8 +171,7 @@ router.put('/:toDoId', requiresAuth, async (req, res) => {
 // @route DELETE api/todos/:toDoId/delete
 // @desc Delete a ToDo
 // @access Private
-
-router.delete('/:toDoId/delete', requiresAuth, async (req, res) => {
+router.delete('/:toDoId', requiresAuth, async (req, res) => {
   try {
     const toDo = await Todo.findOne({
       user: req.user._id,
@@ -189,10 +182,12 @@ router.delete('/:toDoId/delete', requiresAuth, async (req, res) => {
       return res.status(404).json({ error: 'ToDo not found.' })
     }
 
-    const deleteTodo = await Todo.findByIdAndDelete({
-      user: req.body._id,
+    await Todo.findOneAndRemove({
+      user: req.user._id,
       _id: req.params.toDoId
     })
+
+    return res.json({ success: true })
   } catch (err) {
     console.log(err)
     res.status(500).send(err.message)
