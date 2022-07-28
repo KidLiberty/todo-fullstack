@@ -5,6 +5,7 @@ $primary-dark: #026158;
 $dark: #1f2732;
 $dark-light: #2a343f;
 $white: #fff;
+$red: #fc6666;
 
 *,
 *::before,
@@ -35,7 +36,7 @@ textarea {
 }
 
 .main-header {
-  max-width: 768px;
+  max-width: 1024px;
   width: 100%;
   margin: 0 auto;
   padding: 15px;
@@ -99,5 +100,41 @@ textarea {
 
   &__field {
     margin-bottom: 30px;
+
+    label {
+      font-size: 1.5rem;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    input {
+      background-color: $dark;
+      width: 100%;
+      color: $white;
+      padding: 15px;
+      border: none;
+      border-radius: 5px;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  &__footer {
+    .btn {
+      width: 100%;
+    }
+
+    .auth__error {
+      text-align: center;
+      margin-bottom: 1rem;
+      font-size: 1.25em;
+    }
+  }
+
+  &__error {
+    font-size: 1rem;
+    color: $red;
   }
 }
