@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap');
+
+$primary: #00a796;
+$primary-dark: #026158;
+$dark: #1f2732;
+$dark-light: #2a343f;
+$white: #fff;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+  padding: 0;
+  margin: 0;
+  background-color: $dark;
+  color: $white;
+}
+
+p,
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+}
+
+button,
+input,
+textarea {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.main-header {
+  max-width: 768px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 15px;
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__left {
+    a {
+      color: $white;
+      font-weight: 700px;
+      font-size: 2rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+  }
+}
+
+.btn {
+  display: inline-block;
+  background-color: $primary;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: $primary-dark;
+    cursor: pointer;
+  }
+}
+
+.auth {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+
+  &__box {
+    max-width: 500px;
+    width: 100%;
+    padding: 50px;
+    color: $white;
+    background-color: $dark-light;
+    border-radius: 5px;
+  }
+
+  &__header {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  &__field {
+    margin-bottom: 30px;
+  }
+}
