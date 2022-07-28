@@ -45,6 +45,18 @@ router.post('/register', async (req, res) => {
     // Save user to db
     const savedUser = await newUser.save()
 
+    // When a user registers, we can log them in right away with savedUser._id (different from user._id)
+    const payload = { userId: savedUser._id }
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: '7d'
+    })
+
+    res.cookie('access-token', token, {
+      expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production'
+    })
+
     // Return user without showing password
     const userToReturn = { ...savedUser._doc }
     delete userToReturn.password
@@ -89,6 +101,20 @@ router.post('/login', async (req, res) => {
     const userToReturn = { ...user._doc }
     delete userToReturn.password
     return res.json({ token, user: userToReturn })
+  } catch (err) {
+    console.log(err)
+    return res.status(500).send(err.message)
+  }
+})
+
+// @route PUT api/auth/login
+// @desc  Logout user and clear the cookie
+// @access Public
+router.put('/logout', requiresAuth, async (req, res) => {
+  try {
+    res.clearCookie('access-token')
+
+    res.json({ success: true })
   } catch (err) {
     console.log(err)
     return res.status(500).send(err.message)

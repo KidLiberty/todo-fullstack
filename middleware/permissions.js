@@ -2,6 +2,9 @@ const User = require('../models/User')
 const jwt = require('jsonwebtoken')
 
 /* 
+    requiresAuth checks and verifies that the current user
+    is already logged in.
+    
     next() continues the request instead of cutting it early, 
     passing it to the next handler (param) in the function
 */
