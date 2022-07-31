@@ -3,6 +3,7 @@ const router = express.Router()
 const User = require('../models/User')
 const bcrypt = require('bcryptjs')
 const validateRegisterInput = require('../validation/registerValidation')
+const validateLoginInput = require('../validation/loginValidation')
 const jwt = require('jsonwebtoken')
 const requiresAuth = require('../middleware/permissions')
 
@@ -74,17 +75,27 @@ router.post('/register', async (req, res) => {
 // @access Public
 router.post('/login', async (req, res) => {
   try {
+    const { errors, isValid } = validateLoginInput(req.body)
+
+    if (!isValid) {
+      return res.status(400).json(errors)
+    }
+
     // Check for user
     const user = await User.findOne({
       email: new RegExp('^' + req.body.email + '$', 'i')
     })
     if (!user) {
-      return res.status(400).json({ error: 'Login credential error.' })
+      return res
+        .status(400)
+        .json({ error: 'There was a problem with your login credentials.' })
     }
 
     const passwordMatch = await bcrypt.compare(req.body.password, user.password)
     if (!passwordMatch) {
-      return res.status(400).json({ error: 'Login credential error.' })
+      return res
+        .status(400)
+        .json({ error: 'There was a problem with your login credentials.' })
     }
 
     const payload = { userId: user._id }

@@ -5,7 +5,7 @@ $primary-dark: #026158;
 $dark: #1f2732;
 $dark-light: #2a343f;
 $white: #fff;
-$red: #fc6666;
+$red: #d45656;
 
 *,
 *::before,
@@ -98,6 +98,7 @@ textarea {
     color: $white;
     background-color: $dark-light;
     border-radius: 5px;
+    margin-bottom: 20px;
   }
 
   &__header {
@@ -124,7 +125,8 @@ textarea {
       border-radius: 5px;
 
       &:focus {
-        outline: none;
+        outline: 2px solid $primary;
+        transition: all 0.3s ease;
       }
     }
   }
@@ -142,8 +144,13 @@ textarea {
   }
 
   &__error {
-    font-size: 1rem;
     color: $red;
+    font-size: 1.1rem;
+    margin-top: 10px;
+  }
+
+  &__input-error {
+    outline: 3px solid rgb(199, 71, 71);
   }
 
   &__register {
