@@ -117,7 +117,7 @@ const AuthBox = ({ register }) => {
           )}
 
           <div className='auth__footer'>
-            {/* Look up difference on back end error object responses */}
+            {/* Look up difference on back-end error object responses */}
             {Object.keys(errors).length > 0 && (
               <p className='auth__error'>
                 {register ? 'You have some validation errors.' : errors.error}

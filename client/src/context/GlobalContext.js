@@ -48,7 +48,7 @@ export const GlobalProvider = props => {
       const res = await axios.get('/api/auth/current')
 
       if (res.data) {
-        const toDosRes = axios.get('/api/todos/current')
+        const toDosRes = await axios.get('/api/todos/current')
 
         if (toDosRes.data) {
           dispatch({ type: 'SET_USER', payload: res.data })

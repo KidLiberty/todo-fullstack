@@ -133,7 +133,7 @@ router.put('/:toDoId/incomplete', requiresAuth, async (req, res) => {
 })
 
 // @route PUT api/todos/:toDoId
-// @desc Update a a ToDo
+// @desc Update a ToDo
 // @access Private
 router.put('/:toDoId', requiresAuth, async (req, res) => {
   try {
