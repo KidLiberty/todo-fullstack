@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useReducer } from 'react'
+import React, { useContext, useEffect, useReducer } from 'react'
 import axios from 'axios'
 
 // Initial State
@@ -32,7 +32,7 @@ const globalReducer = (state, action) => {
 }
 
 // Create Global Context
-export const GlobalContext = createContext()
+export const GlobalContext = React.createContext()
 
 // Provider Component
 export const GlobalProvider = props => {
@@ -81,10 +81,57 @@ export const GlobalProvider = props => {
     }
   }
 
+  const addToDo = toDo => {
+    dispatch({
+      type: 'SET_INCOMPLETE_TODOS',
+      payload: [toDo, ...state.incompleteToDos]
+    })
+  }
+
+  const toDoComplete = toDo => {
+    dispatch({
+      type: 'SET_INCOMPLETE_TODOS',
+      payload: state.incompleteToDos.filter(
+        incompleteToDo => incompleteToDo._id !== toDo._id
+      )
+    })
+
+    dispatch({
+      type: 'SET_COMPLETE_TODOS',
+      payload: [toDo, ...state.completeToDos]
+    })
+  }
+
+  const toDoIncomplete = toDo => {
+    dispatch({
+      type: 'SET_COMPLETE_TODOS',
+      payload: state.completeToDos.filter(
+        completeTodo => completeTodo._id !== toDo._id
+      )
+    })
+
+    // Todos may not be sorted correctly
+    const newIncompleteTodos = [toDo, ...state.incompleteToDos]
+
+    dispatch({
+      type: 'SET_INCOMPLETE_TODOS',
+      payload: newIncompleteTodos.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      )
+    })
+  }
+
+  const updateTodo = toDo => {
+    dispatch({ type: 'SET_COMPLETE_TODOS' })
+  }
+
   const GlobalContextValue = {
     ...state,
     getCurrentUser,
-    logout
+    logout,
+    addToDo,
+    toDoComplete,
+    toDoIncomplete
   }
 
   return (
