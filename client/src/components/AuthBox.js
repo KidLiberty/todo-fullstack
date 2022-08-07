@@ -40,7 +40,6 @@ const AuthBox = ({ register }) => {
     axios
       .post(register ? '/api/auth/register' : '/api/auth/login', data)
       .then(() => {
-        // Context
         getCurrentUser()
       })
       .catch(err => {
